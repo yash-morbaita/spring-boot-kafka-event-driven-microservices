@@ -24,40 +24,40 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
-      KAFKA_DEFAULT_REPLICATION_FACTOR: 2
-      KAFKA_NUM_PARTITIONS: 3
+      # KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
+#      KAFKA_DEFAULT_REPLICATION_FACTOR: 2
+#      KAFKA_NUM_PARTITIONS: 3
 
-  kafka2:
-    image: confluentinc/cp-kafka:latest
-    container_name: kafka2
-    restart: always
-    depends_on:
-      - zookeeper
-    ports:
-      - "9093:9093"
-    environment:
-      KAFKA_BROKER_ID: 2
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9093
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9093
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
-      KAFKA_DEFAULT_REPLICATION_FACTOR: 2
-      KAFKA_NUM_PARTITIONS: 3
+#   kafka2:
+#     image: confluentinc/cp-kafka:latest
+#     container_name: kafka2
+#     restart: always
+#     depends_on:
+#       - zookeeper
+#     ports:
+#       - "9093:9093"
+#     environment:
+#       KAFKA_BROKER_ID: 2
+#       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+#       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9093
+#       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9093
+#       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
+# #      KAFKA_DEFAULT_REPLICATION_FACTOR: 2
+# #      KAFKA_NUM_PARTITIONS: 3
 
-  kafka3:
-    image: confluentinc/cp-kafka:latest
-    container_name: kafka3
-    restart: always
-    depends_on:
-      - zookeeper
-    ports:
-      - "9094:9094"
-    environment:
-      KAFKA_BROKER_ID: 3
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9094
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9094
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
-      KAFKA_DEFAULT_REPLICATION_FACTOR: 2
-      KAFKA_NUM_PARTITIONS: 3
+#   kafka3:
+#     image: confluentinc/cp-kafka:latest
+#     container_name: kafka3
+#     restart: always
+#     depends_on:
+#       - zookeeper
+#     ports:
+#       - "9094:9094"
+#     environment:
+#       KAFKA_BROKER_ID: 3
+#       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+#       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9094
+#       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9094
+#       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 2
+# #      KAFKA_DEFAULT_REPLICATION_FACTOR: 2
+# #      KAFKA_NUM_PARTITIONS: 3

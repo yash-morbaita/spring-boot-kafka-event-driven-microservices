@@ -16,6 +16,12 @@ public class OrderConsumer {
 
         logger.info(String.format("Order event received in stock service => %s", event.toString()));
 
+        if("NEW_ORDER".equals(event.getStatus())) {
+            logger.info("NEW ORDER is Placed");
+        } else if ("CANCEL_ORDER".equals(event.getStatus())) {
+            logger.info("ORDER is cancelled");
+        }
+
         //save the event data into database and do more operations
     }
 }

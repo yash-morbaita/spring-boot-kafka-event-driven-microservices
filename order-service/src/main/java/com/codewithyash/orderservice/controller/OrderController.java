@@ -24,17 +24,39 @@ public class OrderController {
     @PostMapping("/order")
     public ResponseEntity<String> placeOrder(@RequestBody Order order) {
 
-        orderProducer.sendMessage(getEvent(order));
+        orderProducer.sendMessage(getNewOrderEvent(order));
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body("Order Processed Successfully");
     }
 
-    private OrderEvent getEvent(Order order) {
+
+
+    @PostMapping("/cancel-order")
+    public ResponseEntity<String> cancelOrder(@RequestBody Order order) {
+
+        orderProducer.sendMessage(getCancelOrderEvent(order));
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body("Order Cancelled Successfully");
+    }
+
+    private OrderEvent getNewOrderEvent(Order order) {
         OrderEvent orderEvent = new OrderEvent();
-        orderEvent.setStatus("PENDING");
+        orderEvent.setStatus("NEW_ORDER");
         orderEvent.setMessage("Order is in pending state");
+        order.setOrderId(UUID.randomUUID().toString());
+        orderEvent.setOrder(order);
+        return orderEvent;
+
+    }
+
+    private OrderEvent getCancelOrderEvent(Order order) {
+        OrderEvent orderEvent = new OrderEvent();
+        orderEvent.setStatus("CANCEL_ORDER");
+        orderEvent.setMessage("Order is Cancelled");
         order.setOrderId(UUID.randomUUID().toString());
         orderEvent.setOrder(order);
         return orderEvent;

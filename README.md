@@ -9,3 +9,6 @@ docker compose file docker-compose.yml using docker compose up -d
 2. Run the Order-service
 3. Use postman to send requests to the order-service. It will invoke a kafka event to a topic order_topics
 4. Run the Stock-service, email-service and see it pull the event.
+
+
+Added Spring Executor Framework to execute tasks in parallel.

@@ -1,3 +1,4 @@
+/*
 package com.codewithyash.orderservice.kafka;
 
 import com.codewithyash.basedomain.dto.OrderEvent;
@@ -35,3 +36,4 @@ public class OrderProducer {
         kafkaTemplate.send(message);
     }
 }
+*/

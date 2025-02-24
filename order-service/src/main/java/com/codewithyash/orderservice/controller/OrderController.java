@@ -2,29 +2,32 @@ package com.codewithyash.orderservice.controller;
 
 import com.codewithyash.basedomain.dto.Order;
 import com.codewithyash.basedomain.dto.OrderEvent;
-import com.codewithyash.orderservice.kafka.OrderProducer;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.codewithyash.orderservice.service.TaskExecutorService;
+import com.codewithyash.orderservice.utility.TaskEnum;
+import jakarta.annotation.PreDestroy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1")
 public class OrderController {
 
-    private OrderProducer orderProducer;
+    private final TaskExecutorService taskExecutorService;
 
-    @Autowired
-    public OrderController(OrderProducer orderProducer) {
-        this.orderProducer = orderProducer;
+    public OrderController(TaskExecutorService taskExecutorService) {
+        this.taskExecutorService = taskExecutorService;
     }
 
     @PostMapping("/order")
     public ResponseEntity<String> placeOrder(@RequestBody Order order) {
 
-        orderProducer.sendMessage(getNewOrderEvent(order));
+        List<TaskEnum> task = Arrays.asList(TaskEnum.VALIDATEINPUTPARAMETERSREQUEST,TaskEnum.SENDNEWORDEREVENT);
+        taskExecutorService.executeTask(task,getNewOrderEvent(order));
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -36,7 +39,8 @@ public class OrderController {
     @PostMapping("/cancel-order")
     public ResponseEntity<String> cancelOrder(@RequestBody Order order) {
 
-        orderProducer.sendMessage(getCancelOrderEvent(order));
+        List<TaskEnum> task = Arrays.asList(TaskEnum.VALIDATEINPUTPARAMETERSREQUEST,TaskEnum.VALIDATEINPUTPARAMETERSREQUEST);
+        taskExecutorService.executeTask(task,getCancelOrderEvent(order));
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -62,6 +66,12 @@ public class OrderController {
         return orderEvent;
 
     }
+
+//    @PreDestroy
+//    public void destroyExecutor() {
+//        taskExecutor.shutdown();
+//        System.out.println("ThreadPoolTaskExecutor shutdown gracefully.");
+//    }
 
 
 }
